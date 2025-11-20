@@ -19,7 +19,7 @@ from app.core.token_cache import TokenCache
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     setup_logging()
-    app.state.logger = logging.getLogger("excelvalidator")
+    app.state.logger = logging.getLogger("FLOWX")
     logger = app.state.logger
 
     app_info = {

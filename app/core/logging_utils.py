@@ -130,7 +130,7 @@ def get_logger(request) -> RequestLogger:
       - client_ip
       - correlation_id (from middleware)
     """
-    base_logger = logging.getLogger("excelvalidator")
+    base_logger = logging.getLogger("FLOWX")
 
     client_ip = request.client.host if request.client else "unknown"
 
@@ -147,5 +147,5 @@ def get_app_logger(correlation_id: Optional[str] = None) -> AppLogger:
     """
     Logger for background tasks or non-request contexts.
     """
-    base_logger = logging.getLogger("excelvalidator")
+    base_logger = logging.getLogger("FLOWX")
     return AppLogger(base_logger, correlation_id)

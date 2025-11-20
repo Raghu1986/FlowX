@@ -1,4 +1,4 @@
-1 & C:/mycode/RND/Excel_upload/V1/excelvalidator/.venv/Scripts/Activate.ps1
+1 & C:/mycode/RND/Excel_upload/V1/FLOWX/.venv/Scripts/Activate.ps1
 2 uv run -- python -m debugpy --listen 5679 -m uvicorn app.main:app --reload
 3 RUN AND DEBUG VSCODE
     {

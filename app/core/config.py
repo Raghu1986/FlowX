@@ -4,7 +4,7 @@ from typing import List, Union
 
 
 class Settings(BaseSettings):
-    APP_NAME: str = "ExcelValidator"
+    APP_NAME: str = "FLOWX"
     APP_VERSION: str = "1.0.0"
     APP_ENV: str = "dev"  # dev | staging | prod
     HEARTBEAT_PUBSUB_CHANNEL: str = "service:heartbeat:pub"
