@@ -1,0 +1,12 @@
+{
+  "columns": {
+    "invoiceid": {"type": "int", "required": true},
+    "amount": {"type": "float", "required": true, "regex": "^[0-9]+(\\.[0-9]{1,2})?$"},
+    "servicedate": {"type": "date", "required": true, "regex": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "customername": {"type": "str", "required": false, "regex": "^[A-Za-z ]+$"}
+  },
+  "unique_constraints": [
+   "invoiceid","servicedate"
+  ],
+  "unique_mode": "fail_all"
+}

@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+sqlmodel
+asyncpg
+aioboto3
+openpyxl
+xlsxwriter
+anyio
+python-dotenv

@@ -1,0 +1,48 @@
+1 & C:/mycode/RND/Excel_upload/V1/excelvalidator/.venv/Scripts/Activate.ps1
+2 uv run -- python -m debugpy --listen 5679 -m uvicorn app.main:app --reload
+3 RUN AND DEBUG VSCODE
+    {
+  "version": "0.2.0",
+  "configurations": [
+                {
+                        "name": "Attach to FastAPI (debugpy via uv)",
+                        "type": "debugpy",
+                        "request": "attach",
+                        "connect": {
+                            "host": "localhost",
+                            "port": 5679
+                        },
+                        "justMyCode": false,
+                        "pathMappings": [
+                            {
+                            "localRoot": "${workspaceFolder}",
+                            "remoteRoot": "."
+                            }
+                        ]
+                        }
+                    ]
+                }
+
+
+4 ws://localhost:8000/ws/audit/bf8749fd-a3a5-49e4-aef2-b7819e8db055
+    or
+  ws://localhost:8000/ws/audit/bf8749fd-a3a5-49e4-aef2-b7819e8db055?replay=true
+
+5 REDIS
+    redis-cli  
+    KEYS audit:*
+    Read the Actual Data:127.0.0.1:6379> XRANGE audit:1f4010f3-5148-4c13-b537-431d71398656 - +
+    Tail Live Stream (like your WebSocket):127.0.0.1:6379> XREAD BLOCK 0 STREAMS audit:1f4010f3-5148-4c13-b537-431d71398656 $
+    Check Expiry / TTL:127.0.0.1:6379> TTL audit:1f4010f3-5148-4c13-b537-431d71398656
+    Optional Cleanup (Manual):127.0.0.1:6379> DEL audit:1f4010f3-5148-4c13-b537-431d71398656
+
+
+
+6 Logging stream
+
+    Static mode, filtered by keywords:GET /logs/tail?filter=ERROR,WARNING
+    Static + color output:GET /logs/tail?filter=ERROR,WARNING&color=true
+    Live stream with filter:GET /logs/tail?stream=true&filter=ERROR,timeout
+    Live stream with colorized output:GET /logs/tail?stream=true&filter=ERROR,timeout&color=true
+
+7 uv run -- python -m debugpy --listen 5679 -m uvicorn app.main:app --reload

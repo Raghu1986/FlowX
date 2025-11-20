@@ -1,0 +1,33 @@
+[project]
+name = "FLOWX"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aioboto3>=15.4.0",
+    "alembic>=1.17.1",
+    "anyio>=4.11.0",
+    "asyncpg>=0.30.0",
+    "cryptography>=46.0.3",
+    "fastapi>=0.120.2",
+    "httpx>=0.28.1",
+    "openpyxl>=3.1.5",
+    "psycopg2-binary>=2.9.11",
+    "pydantic-settings>=2.11.0",
+    "pyjwt>=2.10.1",
+    "python-dotenv>=1.2.1",
+    "python-json-logger>=4.0.0",
+    "python-multipart>=0.0.20",
+    "redis>=7.0.1",
+    "requests>=2.32.5",
+    "rich>=14.2.0",
+    "sqlmodel>=0.0.27",
+    "uvicorn[standard]>=0.38.0",
+    "watchtower>=3.4.0",
+    "xlsxwriter>=3.2.9",
+]
+[dependency-groups]
+dev = [
+    "debugpy>=1.8.15",
+]
