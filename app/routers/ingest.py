@@ -9,6 +9,7 @@ from app.core.logging_utils import get_logger, get_app_logger
 from app.services.audit_service import create_audit_entry
 from app.crawler.validation_pipeline import run_excel_validation_pipeline
 from app.s3_utils import upload_stream_to_s3
+from app.auth.deps import user_authorize
 
 router = APIRouter(prefix="/ingest", tags=["ingest"])
 
@@ -28,6 +29,7 @@ def _should_run_in_background(request: Request) -> bool:
 @router.post("/upload-and-validate")
 async def upload_and_validate(
     request: Request,
+    user_claims = Depends(user_authorize),
     file: UploadFile = File(...),
     rules_id: UUID = Form(...),
     background_tasks: BackgroundTasks = None,

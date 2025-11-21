@@ -4,6 +4,7 @@ from fastapi import APIRouter, Query, HTTPException, Request, Depends
 from fastapi.responses import FileResponse
 from app.core.config import settings
 from app.core.logging_utils import get_logger
+from app.auth.deps import user_authorize
 
 router = APIRouter(prefix="/logs", tags=["logs"])
 
@@ -15,7 +16,7 @@ def get_today_log_path() -> str:
 
 
 @router.get("/today", response_class=FileResponse)
-async def get_today_log(request: Request,inline: bool = Query(False, description="View inline instead of download")):
+async def get_today_log(request: Request,user_claims = Depends(user_authorize),inline: bool = Query(False, description="View inline instead of download")):
     logger = get_logger(request)
     logger.info(
         "📂 /logs/today endpoint called",

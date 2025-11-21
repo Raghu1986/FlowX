@@ -6,6 +6,7 @@ from typing import Optional
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Query
 from fastapi import status, HTTPException
 from app.core.config import settings
+from app.auth.deps import websocket_user_authorize
 
 router = APIRouter(prefix="/ws", tags=["ws"])
 
@@ -102,11 +103,32 @@ async def health_ws(
     replay: bool = Query(False, description="Replay last heartbeat on connect"),
     filter: Optional[str] = Query(None, description="Optional keyword filter (case-insensitive)")
 ):
+    # 1. Extract Token
+    auth_header = websocket.headers.get("authorization")
+    if not auth_header or not auth_header.lower().startswith("bearer "):
+        await websocket.close(code=4001)
+        return
+
+    token = auth_header.split(" ", 1)[1]
+
+    # 2. Validate token using your existing user validator
+    try:
+        # Using your existing Azure/Cognito provider:
+        user_claims = await websocket_user_authorize(token)
+
+        # OR if you want universal detection:
+        # identity = await validate_bearer_token(token)
+
+    except Exception as e:
+        await websocket.close(code=4003)
+        return
+    
     """
     WebSocket endpoint that streams heartbeat events in real-time.
     - query param : replay=true -> sends last heartbeat immediately (if present)
     - filter -> sends only messages that contain the filter (case-insensitive)
     """
+    # 3. Accept WebSocket AFTER authentication
     await websocket.accept()
     app = websocket.app
     redis = getattr(app.state, "redis", None)

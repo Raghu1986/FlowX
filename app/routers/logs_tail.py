@@ -2,9 +2,10 @@ import os
 import re
 import asyncio
 from datetime import datetime, timezone
-from fastapi import APIRouter, Query, HTTPException
+from fastapi import APIRouter, Query, HTTPException, Depends
 from fastapi.responses import PlainTextResponse, JSONResponse, StreamingResponse
 from app.core.config import settings
+from app.auth.deps import user_authorize
 
 router = APIRouter(prefix="/logs", tags=["logs"])
 
@@ -71,6 +72,7 @@ async def log_streamer(path: str, poll_interval: float = 1.0, keywords: list[str
 
 @router.get("/tail")
 async def get_log_tail(
+    user_claims = Depends(user_authorize),
     lines: int = Query(100, ge=1, le=1000),
     as_json: bool = Query(False),
     stream: bool = Query(False),

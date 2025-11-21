@@ -6,7 +6,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 
-from app.routers import audit, ingest, ws, ws_health, admin_logs, logs_today, logs_tail, auth, user_api, client_api
+from app.routers import audit, ingest, ws_audit, ws_health, admin_logs, logs_today, logs_tail, auth, user_api, client_api
 from app.core.redis_client import RedisClient
 from app.core.config import settings
 from app.core.db import init_db, close_db
@@ -81,7 +81,7 @@ app.add_middleware(TokenCacheMiddleware)
 
 app.include_router(audit.router)
 app.include_router(ingest.router)
-app.include_router(ws.router)
+app.include_router(ws_audit.router)
 app.include_router(ws_health.router)
 app.include_router(admin_logs.router)
 app.include_router(logs_today.router)

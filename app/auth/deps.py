@@ -26,6 +26,25 @@ async def user_authorize(token: HTTPAuthorizationCredentials = Depends(bearer)):
     #         raise HTTPException(403, "Missing required scopes")
     return claims
 
+async def websocket_user_authorize(token: str):
+    """
+    Dependency for user-authenticated endpoints.
+    Validates user access/id token using configured user provider.
+    """
+    if token is None:
+        raise HTTPException(401, "Missing Authorization")
+    provider = get_user_provider()
+    try:
+        claims = await provider.validate_user_token(token)
+    except AuthError as e:
+        raise HTTPException(status_code=e.status_code, detail=e.detail)
+    # scope/roles checks (optional)
+    # if required_scopes:
+    #     scopes = set(claims.get("scp", "").split()) if isinstance(claims.get("scp", ""), str) else set()
+    #     if not set(required_scopes).issubset(scopes):
+    #         raise HTTPException(403, "Missing required scopes")
+    return claims
+
 
 async def client_authorize(token: HTTPAuthorizationCredentials = Depends(bearer)):
     """

@@ -6,6 +6,7 @@ from app.s3_utils import generate_presigned_get_url
 from app.core.db import get_session  # adjust if your session dep is elsewhere
 from app.core.logging_utils import get_logger
 import os
+from app.auth.deps import user_authorize
 
 router = APIRouter(prefix="/audit", tags=["audit"])
 
@@ -14,6 +15,7 @@ async def get_download_links(
     request: Request,
     audit_id: str,
     expires_in: int = 1800,  # you said 1800 sec default; can be overridden via query
+    user_claims = Depends(user_authorize),
     session: AsyncSession = Depends(get_session),
     
 ):
